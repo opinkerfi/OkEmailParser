@@ -1,0 +1,6 @@
+*~
+.DS_Store
+credentials.py
+venv/
+__pycache__/
+.idea

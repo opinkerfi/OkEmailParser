@@ -14,3 +14,7 @@ employees = auto_task.get_employee_by_email('samuel@ok.is')
 
 for employee in employees:
     get_employee(employee)
+
+tickets = auto_task.get_ticket_by_number('T20180216.0029')
+for ticket in tickets:
+    print(ticket)

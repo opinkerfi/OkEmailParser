@@ -16,10 +16,7 @@ class OkAutoTask(object):
         """Sækja beiðnir eftir T00000.111 númeri"""
         try:
             query = atws.Query('Ticket')
-            query.WHERE('ResourceType', query.Equals, 'Employee')
-            query.open_bracket('AND')
-            query.OR('Active', query.Equals, True)
-            query.close_bracket()
+            query.WHERE('TicketNumber', query.Equals, ticketnumber)
             return self.at.query(query)
         except ValueError:
             print("Sláðu inn ticketnúmer")
@@ -34,7 +31,3 @@ class OkAutoTask(object):
             return self.at.query(query)
         except ValueError:
             print("Sláðu inn netfang")
-
-        # query.open_bracket('AND')
-        # query.OR('Active', query.Equals, True)
-        # query.close_bracket()

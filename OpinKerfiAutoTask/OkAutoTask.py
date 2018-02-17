@@ -1,6 +1,7 @@
 import atws
 import atws.monkeypatch.attributes
 import credentials as config
+import datetime
 
 class OkAutoTask(object):
     """Wrapper class fyrir AutoTask"""
@@ -31,3 +32,20 @@ class OkAutoTask(object):
             return self.at.query(query)
         except ValueError:
             print("Sláðu inn netfang")
+
+    def create_ticket(self, title, description, queue):
+        now = datetime.datetime.now()
+        ticket = self.at.new('Ticket')
+        # Gildi sem við ætlum að bæta við.
+        ticket.QueueID = self.at.picklist['Ticket']['QueueID'][queue]
+        ticket.Title = title
+        ticket.Description = description
+
+        # Restin eru lágmarksreitir sem þarf að fylla út.
+        ticket.AccountID = 0  # Opin Kerfi = 0
+        ticket.DueDateTime = str(now)
+        ticket.Status = self.at.picklist['Ticket']['Status']['New']
+        ticket.Priority = self.at.picklist['Ticket']['Priority']['Medium']
+        ticket.Source = self.at.picklist['Ticket']['Source']['Monitoring Alert']
+        ticket.create()
+        return ticket

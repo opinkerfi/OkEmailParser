@@ -19,3 +19,5 @@ Autotask python api: https://atws.readthedocs.io/
 
 Mælt er með að nota [PyCharm Community Edition](https://www.jetbrains.com/pycharm/download) frá Intellij sem er frítt
 og byrja á því að læra á debugger-inn. Debugger-inn er gulls ígildi þegar það kemur að því að kynnast gögnunum. 
+
+[Kennsla á python debugger i PyCharm](https://www.jetbrains.com/help/pycharm/part-1-debugging-python-code.html)

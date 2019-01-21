@@ -9,8 +9,6 @@ parser = argparse.ArgumentParser()
 parser.add_argument("title")
 parser.add_argument("description")
 args = parser.parse_args()
-print(args.title)
-print(args.description)
 
 ticket = auto_task.create_ticket(
     title = args.title,

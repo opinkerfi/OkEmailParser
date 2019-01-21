@@ -4,3 +4,4 @@ credentials.py
 venv/
 __pycache__/
 .idea
+*.pyc

@@ -1,0 +1,40 @@
+Host: {{ args.host_name }}
+Backend/Site: {{ args.host_backend_name }}
+Backend id: {{ args.host_backend_id }}
+Acknowledged by: {{ args.ackowledged_by }}
+
+{% if host_statuses %}
+-----------------------------------------------------------------------------------
+ Host Problems
+-----------------------------------------------------------------------------------
+{% for  host_status in host_statuses %}
+    Hostname: {{ host_status['name']}}
+    Adress: {{ host_status['address']}}
+    Message: {{ host_status['plugin_output']}}
+{% endfor %}
+
+-----------------------------------------------------------------------------------
+{% endif %}
+
+
+{% if host_service_statuses %}
+-----------------------------------------------------------------------------------
+ Service Problems
+-----------------------------------------------------------------------------------
+{% for host_service_status in host_service_statuses %}
+    State: {{ host_service_status['state'] }}
+    Description: {{ host_service_status['description'] }}
+    Message: {{ host_service_status['plugin_output'] }}
+
+{% endfor %}
+-----------------------------------------------------------------------------------
+{% endif %}
+
+For more information regarding services on this host, click the link below:
+https://nagios.okhysing.is/thruk/#cgi-bin/status.cgi?hidesearch=2&s0_op=%7E&s0_type=search&add_default_service_filter=1&s0_value={{ args.host_name }}
+
+More info for host on Sysvik:
+https://www.sysvik.com/go/ip={{ args.host_name }}
+
+If you can't find the hostname on Sysvik, try searching for ip address instead:
+https://www.sysvik.com/go/{{ args.host_address }}

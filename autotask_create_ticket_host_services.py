@@ -44,7 +44,7 @@ def get_states_mapping(state):
     """ TODO: map numeric stats to warning, critical """
     pass
 
-def get_autotask_mapping(backend_id):
+def get_autotask_mapping(name):
     """ Maps backend_id in thruk to autotask customer id and queue"""
 
     backends = [
@@ -92,7 +92,7 @@ def get_autotask_mapping(backend_id):
     ]
 
     backend_list = [
-        backend for backend in backends if backend['backend_id'] == backend_id]
+        backend for backend in backends if backend['name'] == name]
     return backend_list[0]
 
 
@@ -175,7 +175,7 @@ if __name__ == "__main__":
     args = parse_input_arguments()
     templates = get_template_environment()
     autotask = OkAutoTask()
-    backend = get_autotask_mapping(args.host_backend_id)
+    backend = get_autotask_mapping(args.host_backend_name)
     socket_info = get_livestatus_connection(args.host_backend_address)
     livestatus_action = LiveStatusAction(args.host_backend_address)
 

@@ -1,7 +1,7 @@
 *~
 .DS_Store
 credentials.py
-venv/
+env/
 __pycache__/
 .idea
 *.pyc

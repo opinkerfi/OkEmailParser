@@ -51,43 +51,43 @@ def get_autotask_mapping(name):
         {
             'name': "manage.ruv.is",
             'backend_id': "d07cd",
-            'autotask_id': 34019,
-            'queue': "Hýsing og netrekstur"
+            'autotask_id': 667,
+            'queue': "Tölvupóstur"
         },{
             'name': 'nagios.ksgatt.is',
             'backend_id': "9e0c6",
-            'autotask_id': 34019,
-            'queue': "Hýsing og netrekstur"
+            'autotask_id': 4475,
+            'queue': "Tölvupóstur"
         },{
             'name': 'hortense.skattur.is',
             'backend_id': "1f017",
-            'autotask_id': 34019,
-            'queue': "Hýsing og netrekstur"
+            'autotask_id': 385,
+            'queue': "Tölvupóstur"
         },{
             'name': 'admin.okhysing.is',
             'backend_id': "0dc8e",
             'autotask_id': 34019,
-            'queue': "Hýsing og netrekstur"
+            'queue': "Tölvupóstur"
         },{
             'name': 'netvik.is1net.net',
             'backend_id': "dbc17",
-            'autotask_id': 34019,
-            'queue': "Hýsing og netrekstur"
+            'autotask_id': 3128,
+            'queue': "Tölvupóstur"
         },{
             'name': 'nagios.okhysing.is',
             'backend_id': "20498",
             'autotask_id': 34019,
-            'queue': "Hýsing og netrekstur"
+            'queue': "Tölvupóstur"
         },{
             'name': 'netvik.netrekstur.okh.is',
             'backend_id': "82eea",
             'autotask_id': 34019,
-            'queue': "Hýsing og netrekstur"
+            'queue': "Tölvupóstur"
         },{
             'name': 'ver-monitor-01.okh.is',
             'backend_id': "01d46",
             'autotask_id': 34019,
-            'queue': "Hýsing og netrekstur"
+            'queue': "Tölvupóstur"
         }
     ]
 

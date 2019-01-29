@@ -179,28 +179,32 @@ if __name__ == "__main__":
     socket_info = get_livestatus_connection(args.host_backend_address)
     livestatus_action = LiveStatusAction(args.host_backend_address)
 
+    # Create live status socket from input data
     livestatus_socket = Socket((
         socket_info['backend_host'],
         socket_info['backend_port']
     ))
 
+    # Query for non acknowlegded host issues
     host_statuses = query_livestatus_host_status(
         args.host_name,
         livestatus_socket
     )
 
+    # Query for non acknowlegded service issues
     host_service_statuses = query_livestatus_host_services(
         args.host_name,
         livestatus_socket
     )
 
+    # Generate autotask description text from template
     autotask_rendered_description = templates.get_template('autotaskTemplate.j2').render(
         args=args,
         host_statuses=host_statuses,
         host_service_statuses=host_service_statuses
     )
 
-    ticket_link = "Sent via Autotask api - ticket creation failed."
+    # Create ticket if there are host_statues or host_service_statuses
     if len(host_statuses) >= 1 or len(host_service_statuses) >= 1:
         ticket = autotask.create_ticket(
             title = "Nagios Eftirlit - " + args.host_name ,
@@ -209,11 +213,13 @@ if __name__ == "__main__":
             accountID=backend['autotask_id']
         )
 
-        ticket_link = "Beiðni: https://ww4.autotask.net/Mvc/ServiceDesk/TicketDetail.mvc?&ticketId=" + \
-        str(ticket.id) + " - " + str(ticket.TicketNumber)
+        # Generate comment from template
+        comment = templates.get_template('thrukcommentTemplate.j2').render(ticket=ticket)
 
+    # If there are host statuses we acknowledge and add comment
     if len(host_statuses) >= 1 :
-        livestatus_action.ack_host(args.host_name, args.acknowledged_by ,ticket_link)
+        livestatus_action.ack_host(args.host_name, args.acknowledged_by ,comment)
 
+    # If there are service statuses we acknowledge and add comment
     if len(host_service_statuses)  >= 1 :
-        livestatus_action.ack_services(host_service_statuses,args.acknowledged_by,ticket_link)
+        livestatus_action.ack_services(host_service_statuses,args.acknowledged_by,comment)

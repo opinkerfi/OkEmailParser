@@ -1,5 +1,5 @@
 {% if ticket %}
-Ticket created: {{ ticket.TicketNumber }} - https://ww4.autotask.net/Mvc/ServiceDesk/TicketDetail.mvc?&ticketId={{ ticket.id }}
+Ticket created: {{ ticket.TicketNumber }}   https://ww4.autotask.net/Mvc/ServiceDesk/TicketDetail.mvc?&ticketId={{ ticket.id }}
 {% else %}
 Sent via Autotask api - ticket creation failed.
 {% endif %}

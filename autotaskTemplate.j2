@@ -1,7 +1,6 @@
 Host: {{ args.host_name }}
 Backend/Site: {{ args.host_backend_name }}
 Acknowledged by: {{ args.acknowledged_by }}
-
 {% if host_statuses %}
 -----------------------------------------------------------------------------------
  Host Problems
@@ -11,11 +10,8 @@ Acknowledged by: {{ args.acknowledged_by }}
     Adress: {{ host_status['address']}}
     Message: {{ host_status['plugin_output']}}
 {% endfor %}
-
 -----------------------------------------------------------------------------------
 {% endif %}
-
-
 {% if host_service_statuses %}
 -----------------------------------------------------------------------------------
  Service Problems
@@ -28,7 +24,6 @@ Acknowledged by: {{ args.acknowledged_by }}
 {% endfor %}
 -----------------------------------------------------------------------------------
 {% endif %}
-
 For more information regarding services on this host, click the link below:
 https://nagios.okhysing.is/thruk/#cgi-bin/status.cgi?hidesearch=2&s0_op=%7E&s0_type=search&add_default_service_filter=1&s0_value={{ args.host_name }}
 

@@ -96,6 +96,43 @@ def get_autotask_mapping(name):
     return backend_list[0]
 
 
+def get_autotask_domain_to_customer_mapping(hostname):
+    domains = [
+        {
+            'name': 'matis.local',
+            'autotask_id': 996,
+            'queue': "Tölvupóstur"
+        }, {
+            'name': 'landmotun.local',
+            'autotask_id': 4527,
+            'queue': "Tölvupóstur"
+        }, {
+            'name': 'okh.is',
+            'autotask_id': 34019,
+            'queue': "Tölvupóstur"
+        }, {
+            'name': 'okhysing.is',
+            'autotask_id': 34019,
+            'queue': "Tölvupóstur"
+        }, {
+            'name': 'ok.is',
+            'autotask_id': 0,
+            'queue': "Tölvupóstur"
+        }
+    ]
+
+    # Lookup domain from domains dictinoary and return autotask_id for matching item
+    domain_result = [
+        domain for domain in domains if domain['name'] in hostname.lower()]
+    if domain_result:
+        return domain_result[0]
+    else:
+        return {
+            'name': 'okhysing.is',
+            'autotask_id': 34019,
+            'queue': "Tölvupóstur"
+        }  # Opin Kerfi Hysing
+
 def query_livestatus_host_status(input_hostname, livestatus_socket):
 
     query = livestatus_socket.hosts.columns(
@@ -206,11 +243,12 @@ if __name__ == "__main__":
 
     # Create ticket if there are host_statues or host_service_statuses
     if len(host_statuses) >= 1 or len(host_service_statuses) >= 1:
+        customer = get_autotask_domain_to_customer_mapping(args.hostname)
         ticket = autotask.create_ticket(
-            title = "Nagios Eftirlit - " + args.host_name ,
+            title = "Nagios eftirlit - " + args.host_name ,
             description = autotask_rendered_description,
-            queue=backend['queue'],
-            accountID=backend['autotask_id']
+            queue = customer['queue'],
+            accountID = customer['autotask_id']
         )
 
         # Generate comment from template

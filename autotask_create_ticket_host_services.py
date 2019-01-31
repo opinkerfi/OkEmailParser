@@ -243,7 +243,7 @@ if __name__ == "__main__":
 
     # Create ticket if there are host_statues or host_service_statuses
     if len(host_statuses) >= 1 or len(host_service_statuses) >= 1:
-        customer = get_autotask_domain_to_customer_mapping(args.hostname)
+        customer = get_autotask_domain_to_customer_mapping(args.host_name)
         ticket = autotask.create_ticket(
             title = "Nagios eftirlit - " + args.host_name ,
             description = autotask_rendered_description,

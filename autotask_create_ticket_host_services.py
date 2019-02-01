@@ -130,6 +130,10 @@ def get_autotask_domain_to_customer_mapping(hostname):
             'name': 'lifland.is',
             'autotask_id': 3463,
             'queue': "Tölvupóstur"
+        }, {
+            'name': 'vogar.is',
+            'autotask_id': 3339,
+            'queue': "Tölvupóstur"
         }
     ]
 

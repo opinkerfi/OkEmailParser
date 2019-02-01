@@ -134,6 +134,14 @@ def get_autotask_domain_to_customer_mapping(hostname):
             'name': 'vogar.is',
             'autotask_id': 3339,
             'queue': "Tölvupóstur"
+        }, {
+            'name': 'gjtravel.is',
+            'autotask_id': 7789,
+            'queue': "Tölvupóstur"
+        }, {
+            'name': 'askja.is',
+            'autotask_id': 4535,
+            'queue': "Tölvupóstur"
         }
     ]
 

@@ -118,6 +118,18 @@ def get_autotask_domain_to_customer_mapping(hostname):
             'name': 'ok.is',
             'autotask_id': 0,
             'queue': "Tölvupóstur"
+        }, {
+            'name': 'ksgatt.is',
+            'autotask_id': 4475,
+            'queue': "Tölvupóstur"
+        }, {
+            'name': 'ks.is',
+            'autotask_id': 4475,
+            'queue': "Tölvupóstur"
+        }, {
+            'name': 'lifland.is',
+            'autotask_id': 3463,
+            'queue': "Tölvupóstur"
         }
     ]
 

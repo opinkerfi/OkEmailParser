@@ -150,6 +150,10 @@ def get_autotask_domain_to_customer_mapping(hostname):
             'name': 'mainmanager.internal',
             'autotask_id': 676,
             'queue': "Tölvupóstur"
+        }, {
+            'name': 'ruv.is',
+            'autotask_id': 667,
+            'queue': "Tölvupóstur"
         }
     ]
 

@@ -142,6 +142,14 @@ def get_autotask_domain_to_customer_mapping(hostname):
             'name': 'askja.is',
             'autotask_id': 4535,
             'queue': "Tölvupóstur"
+        }, {
+            'name': 'askja.local',
+            'autotask_id': 4535,
+            'queue': "Tölvupóstur"
+        }, {
+            'name': 'mainmanager.internal',
+            'autotask_id': 676,
+            'queue': "Tölvupóstur"
         }
     ]
 

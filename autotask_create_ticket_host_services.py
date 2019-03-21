@@ -284,7 +284,10 @@ if __name__ == "__main__":
             title = "Nagios eftirlit - " + args.host_name ,
             description = autotask_rendered_description,
             queue = customer['queue'],
-            accountID = customer['autotask_id']
+            accountID = customer['autotask_id'],
+            ticketSource='Monitoring Alert',
+            ticketType='Alert',
+            ticketCategory='AEM Alert'
         )
 
         # Generate comment from template

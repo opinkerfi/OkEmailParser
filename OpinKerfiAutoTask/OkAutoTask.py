@@ -35,7 +35,7 @@ class OkAutoTask(object):
         except ValueError:
             print("Sláðu inn netfang")
 
-    def create_ticket(self, title, description, queue, accountID=0):
+    def create_ticket(self, title, description, queue, accountID=0, ticketSource='Monitoring Alert', ticketType='Monitoring Alert', ticketCategory='Alert'):
         now = datetime.datetime.now()
         ticket = self.at.new('Ticket')
         # Gildi sem við ætlum að bæta við.
@@ -48,6 +48,8 @@ class OkAutoTask(object):
         ticket.DueDateTime = str(now)
         ticket.Status = self.at.picklist['Ticket']['Status']['New']
         ticket.Priority = self.at.picklist['Ticket']['Priority']['Medium']
-        ticket.Source = self.at.picklist['Ticket']['Source']['Monitoring Alert']
+        ticket.Source = self.at.picklist['Ticket']['Source'][ticketSource]
+        ticket.TicketType = self.at.picklist['Ticket']['TicketType'][ticketType]
+        ticket.TicketCategory = self.at.picklist['Ticket']['TicketCategory'][ticketCategory]
         ticket.create()
         return ticket

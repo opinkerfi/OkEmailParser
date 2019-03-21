@@ -9,7 +9,6 @@ def get_employee(employee):
     print("Netfang: " + employee.Email)
     print("Símanúmer: " + employee.MobilePhone)
 
-
 # Hér byrjar test kóði sem notar OkAutoTask wrapper klassa
 auto_task = OkAutoTask()
 employees = auto_task.get_employee_by_email('samuel@ok.is')
@@ -18,7 +17,7 @@ for employee in employees:
     get_employee(employee)
 
 # Fletta upp beiðni
-tickets = auto_task.get_ticket_by_number('T20171025.0050')
+tickets = auto_task.get_ticket_by_number('T20190308.0009')
 for ticket in tickets:
     print(ticket)
 
@@ -27,7 +26,11 @@ now = datetime.datetime.now()
 my_ticket = auto_task.create_ticket(
     title="Prufu Ticket frá Python API: " + str(now.hour) + str(now.minute),
     description="Þessi beiðni var útbúin kl: " + str(now),
-    queue="Hýsing og netrekstur"
+    queue="Hýsing og netrekstur",
+    accountID=0,
+    ticketSource='Monitoring Alert',
+    ticketType='Alert',
+    ticketCategory='AEM Alert'
 )
 
 # Fletta upp nýstofnuðum ticket my_ticket

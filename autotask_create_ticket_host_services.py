@@ -289,6 +289,7 @@ if __name__ == "__main__":
             ticketType='Alert',
             ticketCategory='AEM Alert'
         )
+        print("Ticket created: " + ticket.TicketNumber)
 
         # Generate comment from template
         comment = templates.get_template('thrukcommentTemplate.j2').render(ticket=ticket)
@@ -300,3 +301,5 @@ if __name__ == "__main__":
     # If there are service statuses we acknowledge and add comment
     if len(host_service_statuses)  >= 1 :
         livestatus_action.ack_services(host_service_statuses,args.acknowledged_by,comment)
+
+

@@ -155,6 +155,11 @@ def get_autotask_domain_to_customer_mapping(hostname):
             'autotask_id': 676,
             'queue': "Tölvupóstur"
         }, {
+         }, {
+            'name': 'skattur.is',
+            'autotask_id': 385,
+            'queue': "Tölvupóstur"
+        }, {
             'name': 'ruv.is',
             'autotask_id': 667,
             'queue': "Tölvupóstur"

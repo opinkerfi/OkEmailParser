@@ -12,6 +12,7 @@ from CheckMK.LiveStatus import *
 from OpinKerfiAutoTask.OkAutoTask import OkAutoTask
 from jinja2 import Environment, FileSystemLoader
 
+
 def parse_input_arguments():
     """ Parses the input arguments of this script """
     parser = argparse.ArgumentParser()
@@ -40,9 +41,11 @@ def get_livestatus_connection(host_backend_address):
     backend_port = backend[1]
     return {'backend_host': backend_host, "backend_port": int(backend_port)}
 
+
 def get_states_mapping(state):
     """ TODO: map numeric stats to warning, critical """
     pass
+
 
 def get_autotask_mapping(name):
     """ Maps backend_id in thruk to autotask customer id and queue"""
@@ -53,37 +56,37 @@ def get_autotask_mapping(name):
             'backend_id': "d07cd",
             'autotask_id': 667,
             'queue': "Tölvupóstur"
-        },{
+        }, {
             'name': 'nagios.ksgatt.is',
             'backend_id': "9e0c6",
             'autotask_id': 4475,
             'queue': "Tölvupóstur"
-        },{
+        }, {
             'name': 'hortense.skattur.is',
             'backend_id': "1f017",
             'autotask_id': 385,
             'queue': "Tölvupóstur"
-        },{
+        }, {
             'name': 'admin.okhysing.is',
             'backend_id': "0dc8e",
             'autotask_id': 34019,
             'queue': "Tölvupóstur"
-        },{
+        }, {
             'name': 'netvik.is1net.net',
             'backend_id': "dbc17",
             'autotask_id': 3128,
             'queue': "Tölvupóstur"
-        },{
+        }, {
             'name': 'nagios.okhysing.is',
             'backend_id': "20498",
             'autotask_id': 34019,
             'queue': "Tölvupóstur"
-        },{
+        }, {
             'name': 'netvik.netrekstur.okh.is',
             'backend_id': "82eea",
             'autotask_id': 34019,
             'queue': "Tölvupóstur"
-        },{
+        }, {
             'name': 'ver-monitor-01.okh.is',
             'backend_id': "01d46",
             'autotask_id': 34019,
@@ -150,12 +153,11 @@ def get_autotask_domain_to_customer_mapping(hostname):
             'name': 'mainmanager.internal',
             'autotask_id': 676,
             'queue': "Tölvupóstur"
-         }, {
+        }, {
             'name': 'iceconsult.is',
             'autotask_id': 676,
             'queue': "Tölvupóstur"
         }, {
-         }, {
             'name': 'skattur.is',
             'autotask_id': 385,
             'queue': "Tölvupóstur"
@@ -178,6 +180,7 @@ def get_autotask_domain_to_customer_mapping(hostname):
             'queue': "Tölvupóstur"
         }  # Opin Kerfi Hysing
 
+
 def query_livestatus_host_status(input_hostname, livestatus_socket):
 
     query = livestatus_socket.hosts.columns(
@@ -185,7 +188,7 @@ def query_livestatus_host_status(input_hostname, livestatus_socket):
         'address',
         'plugin_output',
         'contacts'
-    ).filter('name = ' + input_hostname ).filter('state != 0').filter('acknowledged != 1')
+    ).filter('name = ' + input_hostname).filter('state != 0').filter('acknowledged != 1')
 
     host_acknowledged = query.call()
     return host_acknowledged
@@ -199,7 +202,7 @@ def query_livestatus_host_services(input_hostname, livestatus_socket):
         'state',
         'host_address',
         'plugin_output'
-    ).filter('host_name = ' + input_hostname ).filter('state != 0').filter('acknowledged != 1')
+    ).filter('host_name = ' + input_hostname).filter('state != 0').filter('acknowledged != 1')
 
     services_acknowledged = query.call()
     return services_acknowledged
@@ -226,8 +229,9 @@ class LiveStatusAction:
         """ Helper Function: Acknowledge a host problem with a comment.
         This should be able to to pickup the user name from the session.
         """
-        cmd = "ACKNOWLEDGE_HOST_PROBLEM;%(host_name)s;1;1;1;%(acknowledged_by)s;%(message)s\n" % locals()
-        self.command( cmd )
+        cmd = "ACKNOWLEDGE_HOST_PROBLEM;%(host_name)s;1;1;1;%(acknowledged_by)s;%(message)s\n" % locals(
+        )
+        self.command(cmd)
 
     def ack_hosts(self, host_list, acknowledged_by,  message):
         """ Helper Function: Acknowledge a list of host problems with a comment.
@@ -235,23 +239,25 @@ class LiveStatusAction:
         later version. """
         cmd_t = "ACKNOWLEDGE_HOST_PROBLEM;%(host_name)s;1;1;1;%(acknowledged_by)s;%(message)s\n"
         for host_name in host_list:
-            self.command( cmd_t % locals() )
+            self.command(cmd_t % locals())
 
     def ack_service(self, service, acknowledged_by, message):
         """ Helper Function: Acknowledge a service problem with a comment. """
-        self.command( "ACKNOWLEDGE_SVC_PROBLEM;%(service)s;1;1;1;%(acknowledged_by)s;%(message)s\n" % locals() )
+        self.command(
+            "ACKNOWLEDGE_SVC_PROBLEM;%(service)s;1;1;1;%(acknowledged_by)s;%(message)s\n" % locals())
 
     def ack_services(self, service_list, acknowledged_by, message):
         """ Helper Function: Acknowledge a list service problems with a comment. """
         for service in service_list:
             self.command(
-                "ACKNOWLEDGE_SVC_PROBLEM;" + \
-                service['host_name'] + ";" + \
-                service['description'] + ";" + \
-                "1;1;1;" + \
-                acknowledged_by + ";" + \
+                "ACKNOWLEDGE_SVC_PROBLEM;" +
+                service['host_name'] + ";" +
+                service['description'] + ";" +
+                "1;1;1;" +
+                acknowledged_by + ";" +
                 message + "\n"
             )
+
 
 if __name__ == "__main__":
     args = parse_input_arguments()
@@ -290,10 +296,10 @@ if __name__ == "__main__":
     if len(host_statuses) >= 1 or len(host_service_statuses) >= 1:
         customer = get_autotask_domain_to_customer_mapping(args.host_name)
         ticket = autotask.create_ticket(
-            title = "Nagios eftirlit - " + args.host_name ,
-            description = autotask_rendered_description,
-            queue = customer['queue'],
-            accountID = customer['autotask_id'],
+            title="Nagios eftirlit - " + args.host_name,
+            description=autotask_rendered_description,
+            queue=customer['queue'],
+            accountID=customer['autotask_id'],
             ticketSource='Monitoring Alert',
             ticketType='Alert',
             ticketCategory='AEM Alert'
@@ -301,14 +307,15 @@ if __name__ == "__main__":
         print("Ticket created: " + ticket.TicketNumber)
 
         # Generate comment from template
-        comment = templates.get_template('thrukcommentTemplate.j2').render(ticket=ticket)
+        comment = templates.get_template(
+            'thrukcommentTemplate.j2').render(ticket=ticket)
 
     # If there are host statuses we acknowledge and add comment
-    if len(host_statuses) >= 1 :
-        livestatus_action.ack_host(args.host_name, args.acknowledged_by ,comment)
+    if len(host_statuses) >= 1:
+        livestatus_action.ack_host(
+            args.host_name, args.acknowledged_by, comment)
 
     # If there are service statuses we acknowledge and add comment
-    if len(host_service_statuses)  >= 1 :
-        livestatus_action.ack_services(host_service_statuses,args.acknowledged_by,comment)
-
-
+    if len(host_service_statuses) >= 1:
+        livestatus_action.ack_services(
+            host_service_statuses, args.acknowledged_by, comment)

@@ -91,7 +91,13 @@ def get_autotask_mapping(name):
             'backend_id': "01d46",
             'autotask_id': 34019,
             'queue': "Tölvupóstur"
+        }, {
+            'name': 'netvik.nordural.is',
+            'backend_id': "e20a9",
+            'autotask_id': 560,
+            'queue': "Tölvupóstur"
         }
+
     ]
 
     backend_list = [
@@ -187,7 +193,8 @@ def query_livestatus_host_status(input_hostname, livestatus_socket):
         'name',
         'address',
         'plugin_output',
-        'contacts'
+        'contacts',
+	'last_state_change'
     ).filter('name = ' + input_hostname).filter('state != 0').filter('acknowledged != 1')
 
     host_acknowledged = query.call()
@@ -201,7 +208,8 @@ def query_livestatus_host_services(input_hostname, livestatus_socket):
         'service_description',
         'state',
         'host_address',
-        'plugin_output'
+        'plugin_output',
+	'last_state_change'
     ).filter('host_name = ' + input_hostname).filter('state != 0').filter('acknowledged != 1')
 
     services_acknowledged = query.call()
@@ -284,6 +292,20 @@ if __name__ == "__main__":
         args.host_name,
         livestatus_socket
     )
+
+    # Convert epoch time to date
+    for hs in host_statuses:
+        last_state_change_epoch=hs['last_state_change']
+        last_state_change_date=time.strftime('%Y-%m-%d %H:%M:%S', time.localtime(last_state_change_epoch))
+	# Update field with datetime instead of epoch time
+        hs['last_state_change']=last_state_change_date
+
+    # Convert epoch time to date
+    for hss in host_service_statuses:
+        last_state_change_epoch=hss['last_state_change']
+        last_state_change_date=time.strftime('%Y-%m-%d %H:%M:%S', time.localtime(last_state_change_epoch))
+	# Update field with datetime instead of epoch time
+        hss['last_state_change']=last_state_change_date
 
     # Generate autotask description text from template
     autotask_rendered_description = templates.get_template('autotaskTemplate.j2').render(

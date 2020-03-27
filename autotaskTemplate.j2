@@ -8,6 +8,7 @@ Acknowledged by: {{ args.acknowledged_by }}
 {% for  host_status in host_statuses %}
     Hostname: {{ host_status['name']}}
     Adress: {{ host_status['address']}}
+    Last state change: {{ host_status['last_state_change']}}
     Message: {{ host_status['plugin_output']}}
 {% endfor %}
 -----------------------------------------------------------------------------------
@@ -19,8 +20,8 @@ Acknowledged by: {{ args.acknowledged_by }}
 {% for host_service_status in host_service_statuses %}
     State: {{ host_service_status['state'] }}
     Description: {{ host_service_status['description'] }}
+    Last state change: {{ host_service_status['last_state_change'] }}
     Message: {{ host_service_status['plugin_output'] }}
-
 {% endfor %}
 -----------------------------------------------------------------------------------
 {% endif %}

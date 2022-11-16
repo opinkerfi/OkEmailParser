@@ -11,4 +11,4 @@ python-mk-livestatus = "==0.4"
 Jinja2 = "==2.11.3"
 
 [requires]
-python_version = "3.7"
+python_version = "3.10"

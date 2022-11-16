@@ -12,7 +12,9 @@ class OkAutoTask(object):
         """Init fall"""
         self.at = atws.connect(
             username=config.autoTaskCredentials['username'],
-            password=config.autoTaskCredentials['password']
+            password=config.autoTaskCredentials['password'],
+            apiversion=config.autoTaskCredentials['apiVersion'],
+            integrationcode=config.autoTaskCredentials['integrationCode']
         )
 
     def get_ticket_by_number(self, ticketnumber):

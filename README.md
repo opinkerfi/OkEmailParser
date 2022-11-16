@@ -6,8 +6,8 @@
 * Installið (eða uppfærið) pipenv með `pip install [--upgrade] pipenv`
 * Ræsið sér environment með `pipenv shell`
 * Installið dependencies með `pipenv install`
-* Afrita credentials-example.py yfir í credentials.py og fylla út. Hægt er að nota eigið netfang og lykilorð í þróun.
-credentials.py er í `.gitignore` og fer því ekki óvart inn í github.
+* Afrita credentials-example.py yfir í credentials.py og fylla út. credentials.py er í `.gitignore` og fer því ekki óvart inn í github.
+* Prufið virkni með `pipenv run python test.py` - það flettir upp notanda, ticket, og stofnar test ticket.
 
 ## Skjölun
 

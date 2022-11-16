@@ -55,47 +55,52 @@ def get_autotask_mapping(name):
             'name': "manage.ruv.is",
             'backend_id': "d07cd",
             'autotask_id': 667,
-            'queue': "Tölvupóstur"
+            'queue': "NOC"
         }, {
             'name': 'nagios.ksgatt.is',
             'backend_id': "9e0c6",
             'autotask_id': 4475,
-            'queue': "Tölvupóstur"
+            'queue': "NOC"
         }, {
             'name': 'hortense.skattur.is',
             'backend_id': "1f017",
             'autotask_id': 385,
-            'queue': "Tölvupóstur"
+            'queue': "NOC"
         }, {
             'name': 'admin.okhysing.is',
             'backend_id': "0dc8e",
             'autotask_id': 34019,
-            'queue': "Tölvupóstur"
+            'queue': "NOC"
         }, {
             'name': 'netvik.is1net.net',
             'backend_id': "dbc17",
             'autotask_id': 3128,
-            'queue': "Tölvupóstur"
+            'queue': "NOC"
         }, {
             'name': 'nagios.okhysing.is',
             'backend_id': "20498",
             'autotask_id': 34019,
-            'queue': "Tölvupóstur"
+            'queue': "NOC"
         }, {
             'name': 'netvik.netrekstur.okh.is',
             'backend_id': "82eea",
             'autotask_id': 34019,
-            'queue': "Tölvupóstur"
+            'queue': "NOC"
         }, {
             'name': 'ver-monitor-01.okh.is',
             'backend_id': "01d46",
             'autotask_id': 34019,
-            'queue': "Tölvupóstur"
+            'queue': "NOC"
+        }, {
+            'name': 'netvik.icehotels.is',
+            'backend_id': "9e0f4",
+            'autotask_id': 5041,
+            'queue': "NOC"
         }, {
             'name': 'netvik.nordural.is',
             'backend_id': "e20a9",
             'autotask_id': 560,
-            'queue': "Tölvupóstur"
+            'queue': "NOC"
         }
 
     ]
@@ -110,71 +115,71 @@ def get_autotask_domain_to_customer_mapping(hostname):
         {
             'name': 'matis.local',
             'autotask_id': 996,
-            'queue': "Tölvupóstur"
+            'queue': "NOC"
         }, {
             'name': 'landmotun.local',
             'autotask_id': 4527,
-            'queue': "Tölvupóstur"
+            'queue': "NOC"
         }, {
             'name': 'okh.is',
             'autotask_id': 34019,
-            'queue': "Tölvupóstur"
+            'queue': "NOC"
         }, {
             'name': 'okhysing.is',
             'autotask_id': 34019,
-            'queue': "Tölvupóstur"
+            'queue': "NOC"
         }, {
             'name': 'ok.is',
             'autotask_id': 0,
-            'queue': "Tölvupóstur"
+            'queue': "NOC"
         }, {
             'name': 'ksgatt.is',
             'autotask_id': 4475,
-            'queue': "Tölvupóstur"
+            'queue': "NOC"
         }, {
             'name': 'ks.is',
             'autotask_id': 4475,
-            'queue': "Tölvupóstur"
+            'queue': "NOC"
         }, {
             'name': 'lifland.is',
             'autotask_id': 3463,
-            'queue': "Tölvupóstur"
+            'queue': "NOC"
         }, {
             'name': 'vogar.is',
             'autotask_id': 3339,
-            'queue': "Tölvupóstur"
+            'queue': "NOC"
         }, {
             'name': 'gjtravel.is',
             'autotask_id': 7789,
-            'queue': "Tölvupóstur"
+            'queue': "NOC"
         }, {
             'name': 'askja.is',
             'autotask_id': 4535,
-            'queue': "Tölvupóstur"
+            'queue': "NOC"
         }, {
             'name': 'askja.local',
             'autotask_id': 4535,
-            'queue': "Tölvupóstur"
+            'queue': "NOC"
         }, {
             'name': 'mainmanager.internal',
             'autotask_id': 676,
-            'queue': "Tölvupóstur"
+            'queue': "NOC"
         }, {
             'name': 'iceconsult.is',
             'autotask_id': 676,
-            'queue': "Tölvupóstur"
+            'queue': "NOC"
         }, {
             'name': 'skattur.is',
             'autotask_id': 385,
-            'queue': "Tölvupóstur"
+            'queue': "NOC"
         }, {
             'name': 'ruv.is',
             'autotask_id': 667,
-            'queue': "Tölvupóstur"
+            'queue': "NOC"
         }, {
             'name': 'stef.local',
             'autotask_id': 481,
-            'queue': "Tölvupóstur"
+            'queue': "NOC"
         }
     ]
 
@@ -187,7 +192,7 @@ def get_autotask_domain_to_customer_mapping(hostname):
         return {
             'name': 'okhysing.is',
             'autotask_id': 34019,
-            'queue': "Tölvupóstur"
+            'queue': "NOC"
         }  # Opin Kerfi Hysing
 
 
@@ -197,8 +202,8 @@ def query_livestatus_host_status(input_hostname, livestatus_socket):
         'name',
         'address',
         'plugin_output',
-        'contacts',
-	'last_state_change'
+        'last_state_change',
+        'contacts'
     ).filter('name = ' + input_hostname).filter('state != 0').filter('acknowledged != 1')
 
     host_acknowledged = query.call()
@@ -213,7 +218,7 @@ def query_livestatus_host_services(input_hostname, livestatus_socket):
         'state',
         'host_address',
         'plugin_output',
-	'last_state_change'
+        'last_state_change'
     ).filter('host_name = ' + input_hostname).filter('state != 0').filter('acknowledged != 1')
 
     services_acknowledged = query.call()
@@ -301,14 +306,14 @@ if __name__ == "__main__":
     for hs in host_statuses:
         last_state_change_epoch=hs['last_state_change']
         last_state_change_date=time.strftime('%Y-%m-%d %H:%M:%S', time.localtime(last_state_change_epoch))
-	# Update field with datetime instead of epoch time
+        # Update field with datetime instead of epoch time
         hs['last_state_change']=last_state_change_date
 
     # Convert epoch time to date
     for hss in host_service_statuses:
         last_state_change_epoch=hss['last_state_change']
         last_state_change_date=time.strftime('%Y-%m-%d %H:%M:%S', time.localtime(last_state_change_epoch))
-	# Update field with datetime instead of epoch time
+        # Update field with datetime instead of epoch time
         hss['last_state_change']=last_state_change_date
 
     # Generate autotask description text from template
